@@ -44,8 +44,8 @@ func main() {
 	}
 
 	jsonPublicKey := &PublicKey{
-		X:     privateKey.X,
-		Y:     privateKey.Y,
+		X:     privateKey.PublicKey.X,
+		Y:     privateKey.PublicKey.Y,
 		Curve: "P-256",
 	}
 

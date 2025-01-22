@@ -1,0 +1,71 @@
+// 검증 가능한 자격 증명
+
+{
+  /* 이 필드는 문서에서 사용되는 용어와 구조가 무엇인지를 정의
+   * 이 예제에서는 W3C의 Verifiable Credentials의 표준을 따르고 있다.
+   * 첫 번째 항목은 자격 증명의 일반적인 정의를 포함한 URL 
+   * 두 번째 항목은 예시와 관련된 추가적인 문서
+  */
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"   
+  ],
+  
+  /* 이 필드는 자격 증명의 고유한 식별자
+   * 위 예시에서는 "http://example.edu/credentials/1872"가 자격 증명의 고유 ID로 사용된다
+   * 이는 해당 자격 증명을 다른 자격 증명과 구별하는 데 사용된다.
+   */
+  "id": "http://example.edu/credentials/1872",
+  
+  /* 이 필드는 자격 증명의 유형을 정의
+   * "VerifiableCredential": 이 문서가 검증 가능한 자격 증명임을 나타낸다.
+   * "AlumniCredential": 이 자격 증명이 졸업생 자격 증명임을 나타낸다.  
+   */
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  
+  /* 자격 증명을 발급한 기관이나 개인의 식별자 */
+  "issuer": "https://example.edu/issuers/565049",
+  
+  /* 자격 증명이 발급된 날짜 및 시간. ISO 8601 형식으로 날짜와 시간이 제공된다 */
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  
+  /* credentialSubject는 자격 증명의 주요 주체, 즉 증명받은 사람이나 조직. */
+  "credentialSubject": {
+
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",   // 증명 대상자의 고유 DID(Decentralized Identifier)
+
+    "alumniOf": {                                       // 졸업한 학교에 관한 정보
+      "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",  // 학교의 고유 DID
+      "name": [{                                        // 학교 이름은 두 가지 언어(영어와 프랑스어)로 제공.
+        "value": "Example University",   
+        "lang": "en"
+      }, {
+        "value": "Exemple d'Université",   
+        "lang": "fr"
+      }]
+    }
+  },
+  
+  // 자격 증명이 실제로 발급되었음을 검증하기 위한 디지털 서명
+  "proof": {
+    
+    // 서명 방식이 RSA 기반 서명(RSA Signature 2018)임을 나타냄
+    "type": "RsaSignature2018",
+    
+    // 서명이 생성된 시간
+    "created": "2017-06-18T21:19:10Z",
+    
+    // 서명의 목적이 **주장(assertion)**을 증명하기 위한 것
+    "proofPurpose": "assertionMethod",
+    
+    // 이 서명이 유효한지 확인하는 데 사용할 공개 키의 위치를 정의. 공개 키는 해당 URL에서 찾을 수 있다.
+    "verificationMethod": "https://example.edu/issuers/565049#key-1",
+    
+    // 서명 자체를 나타내는 **JWS (JSON Web Signature)**. 
+    // 서명의 실제 데이터를 포함.
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
+      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
+      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
+      PAYuNzVBAh4vGHSrQyHUdBBPM"
+  }
+}

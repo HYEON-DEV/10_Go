@@ -1,0 +1,53 @@
+1. go 라이브러리
+2. 공개키 / 
+
+예시
+
+package main
+
+import (
+	"fmt"
+	"github.com/decentralized-identity/go-did"
+	"github.com/decentralized-identity/go-did/crypto"
+)
+
+func main() {
+	// 예시로 랜덤 공개 키 생성
+	privateKey, publicKey, err := crypto.GenerateKeyPair(crypto.ED25519)
+	if err != nil {
+		fmt.Println("Key generation failed:", err)
+		return
+	}
+
+	// 공개 키로 DID 생성 (did:key 메서드 사용)
+	did, err := did.NewDIDFromPublicKey(publicKey)
+	if err != nil {
+		fmt.Println("DID creation failed:", err)
+		return
+	}
+
+	// 생성된 DID 출력
+	fmt.Println("Generated DID:", did)
+
+	// DID Document 생성
+	didDoc := did.NewDocument(did, privateKey)
+	fmt.Println("DID Document:", didDoc)
+}
+
+
+
+DID Document 관리
+DID가 생성되면, 해당 DID에 대한 DID Document를 생성하여 해당 DID의 소유자, 공개 키, 인증 방법, 서비스 엔드포인트 등의 정보를 포함시킵니다. Go에서 DID Document를 관리하려면 JSON 형식으로 DID Document를 구성하고 이를 API를 통해 등록하거나 업데이트할 수 있습니다.
+
+DID Document 예시:
+
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:ethr:0x6fC478dB41F4C04F537865DF708F2C3451E7050F",
+  "publicKey": [{
+    "id": "did:ethr:0x6fC478dB41F4C04F537865DF708F2C3451E7050F#key-1",
+    "type": "EcdsaSecp256k1VerificationKey2019",
+    "controller": "did:ethr:0x6fC478dB41F4C04F537865DF708F2C3451E7050F",
+    "publicKeyHex": "03adceff905a2d2353e4f0d02f4b30d2a334cf23ec840c8ffabbd2ff4938e97a9b"
+  }]
+}

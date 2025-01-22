@@ -23,14 +23,15 @@ func main() {
 	// 개인 키 파일 경로
 	privateKeyFilePath := "c:/HYEON_GitHub/10_Go/K4/KeyFiles/PrivateKey.json"
 
-	// 개인 키 파일 읽기기
+	// 개인 키 파일 읽기
 	privateKeyData, err := os.ReadFile(privateKeyFilePath)
 	if err != nil {
 		log.Fatalf("개인 키 파일 읽기 실패: %v", err)
 	}
 
 	// JSON 형식의 개인 키 데이터를 PrivateKey 구조체로 변환
-	var jsonPrivateKey PrivateKey
+
+	var jsonPrivateKey PrivateKey // var : 해당 변수는 타입에 따라 기본값으로 초기화된다.
 	err = json.Unmarshal(privateKeyData, &jsonPrivateKey)
 	if err != nil {
 		log.Fatalf("개인 키 JSON 파싱 실패: %v", err)
@@ -48,7 +49,7 @@ func main() {
 	}
 
 	// 서명할 메시지 설정
-	message := "hyeon"
+	message := "hyeon" // vc
 	hash := sha256.Sum256([]byte(message))
 
 	// ECDSA 서명 생성
@@ -61,10 +62,10 @@ func main() {
 	signature := append(r.Bytes(), s.Bytes()...)
 	fmt.Printf("서명: %x\n", signature)
 
-	// err = os.WriteFile("Signature.txt", signature, 0644)
-	// if err != nil {
-	// 	log.Fatalf("서명 파일 저장 실패: %v", err)
-	// }
+	err = os.WriteFile("Signature.txt", signature, 0644)
+	if err != nil {
+		log.Fatalf("서명 파일 저장 - 실패: %v", err)
+	}
 
-	// fmt.Println("Signature saved to Signature.txt")
+	fmt.Println("서명 파일 저장 - 성공")
 }
