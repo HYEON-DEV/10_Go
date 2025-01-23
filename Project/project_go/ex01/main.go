@@ -19,5 +19,5 @@ func main() {
 	* TCP 포트 8080에서 HTTP 서버 시작
 	* 두 번째 매개변수는 기본 멀티플렉서를 사용하기 위해 nil로 설정된다
 	 */
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":808", nil)
 }

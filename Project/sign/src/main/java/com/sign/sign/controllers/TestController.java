@@ -1,20 +1,21 @@
 package com.sign.sign.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 
-@RestController
+@Controller
 public class TestController {
-    
-    @GetMapping("/test")
-    public String test() {
-        RestTemplate restTemplate = new RestTemplate();
-        String goApiUrl = "http://localhost:8080/api/test";
-        String response = restTemplate.getForObject(goApiUrl, String.class);
-        return response;
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
+
+    @GetMapping("/generate_key")
+    public String generateKey() {
+        return "generate_key";
+    }
+    
     
 }
