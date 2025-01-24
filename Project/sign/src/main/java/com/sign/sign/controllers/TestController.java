@@ -12,9 +12,9 @@ public class TestController {
         return "index";
     }
 
-    @GetMapping("/generate_key")
-    public String generateKey() {
-        return "generate_key";
+    @GetMapping("/sign")
+    public String sign() {
+        return "sign";
     }
     
     

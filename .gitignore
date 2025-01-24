@@ -1,6 +1,6 @@
 *.mod
 *.exe
-
+tmp/
 
 
 node_modules/
